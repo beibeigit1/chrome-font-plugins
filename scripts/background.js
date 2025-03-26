@@ -1,4 +1,6 @@
-let popupData = {};
+let popupData = {
+  isCollecting: false,
+};
 // 从popup接收并转发到content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.from === "popup" && request.to === "content") {
@@ -19,41 +21,41 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.error("Active tab has no ID");
         return;
       }
-
+// 跟上一次活跃的tab进行通讯
       chrome.tabs.sendMessage(activeTab?.id, request);
+      if (request.data.key === "start_collect") {
+        popupData = {
+          ...popupData,
+          isCollecting: true,
+          activeId: activeTab?.id,
+        };
+      }
     });
   }
 
   // 从content script接收并转发到popup
   if (request.from === "content" && request.to === "popup") {
+    if (request.data.key === "collect_result") {
+      popupData = {
+        ...popupData,
+        result:request.data.result,
+        isCollecting: false,
+      };
+
+
+    }
     chrome.runtime.sendMessage({
       from: "content",
       to: "popup",
       data: request.data,
     });
+   
   }
 
   // 从popup接收到background
   if (request.from === "popup" && request.to === "background") {
     let data = request.data;
-    if (data.key === "save_data") {
-      popupData = {
-        ...popupData,
-        ...data.data,
-      };
-    } else if (data.key === "get_data") {
-      sendResponse(popupData);
-    }
-  }
-  // 从popup接收到background
-  if (request.from === "content" && request.to === "background") {
-    let data = request.data;
-    if (data.key === "save_data") {
-      popupData = {
-        ...popupData,
-        ...data.data,
-      };
-    } else if (data.key === "get_data") {
+     if (data.key === "get_data") {
       sendResponse(popupData);
     }
   }

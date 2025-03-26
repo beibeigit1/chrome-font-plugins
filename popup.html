@@ -31,7 +31,7 @@
     }
     
     h1::before {
-      content: "⎇";
+      content: "";
       font-size: 20px;
     }
     
@@ -85,6 +85,10 @@
     
     #startButton:hover {
       background-color: #3367d6;
+    }
+    #startButton:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     
     #stopButton {
@@ -142,7 +146,7 @@
     }
     
     .loading::after {
-      content: "⠋";
+      content: "work";
       animation: spin 1s linear infinite;
       display: inline-block;
     }
@@ -157,12 +161,12 @@
   
   <div class="form-group">
     <label for="timeInput">Detection Duration (seconds)</label>
-    <input type="number" id="timeInput" value="60" min="1" max="3600">
+    <input type="number" id="timeInput" value="10" min="1" max="3600">
   </div>
   
   <div class="form-group">
     <label for="fontInput">Font Name (case-insensitive)</label>
-    <input type="text" id="fontInput" value="AlibabaPuHuiTi" placeholder="Enter font family name">
+    <input type="text" id="fontInput" value="AlibabaPuHui" placeholder="Enter font family name">
   </div>
   
   <div class="button-group">

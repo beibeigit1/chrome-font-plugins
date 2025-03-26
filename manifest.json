@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "AlibabaPuHuiTi Text Collector",
+    "name": "Text Collector",
     "version": "1.0",
-    "description": "Collects unique characters using AlibabaPuHuiTi font in 1 minute",
+    "description": "Collects unique characters using font in some seconds",
     "permissions": [
       "activeTab",
       "tabs",
