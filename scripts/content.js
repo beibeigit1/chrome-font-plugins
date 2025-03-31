@@ -2,6 +2,7 @@
 const uniqueChars = new Set();
 let intervalId = null;
 
+// 发送消息
 function sendData(data){
   chrome.runtime.sendMessage({
     from: 'content',
